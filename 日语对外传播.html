@@ -1,0 +1,608 @@
+<html lang="en">
+<head>
+    <script src="JS/echarts.min.js"></script>
+    <script src="JS/world.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 谷歌字体 -->
+    <link
+      href="CSS/googlefont.css"
+      rel="stylesheet"
+    />
+
+    <!-- 渲染css文件 CDN -->
+    <link
+    href="CSS/venobox.min.css"
+      rel="stylesheet"
+    />
+    <link
+    href="CSS/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/animate.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/icofont.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 主渲染文件 -->
+    <link href="CSS/style.css" rel="stylesheet" /> 
+    <title>日语对外传播</title>
+    <style>
+        .container2345 {
+            display: flex;
+            justify-content: space-between; /* 使左右两边的容器均匀分布 */
+            width: 100%;
+            height: 1000px;
+        }
+        .right-containers {
+            display: flex;
+            flex-direction: column;
+            width: 670px;
+        }
+        .center_box {
+            background-image: url('pic/背景1.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <!-- 头部导航栏  -->
+    <header id="header">
+      <div class="container">
+        <!-- logo左侧 -->
+        <div class="logo float-left">
+          <h1 class="text-light">
+            <a href="首页.html"><span>日语对外传播<br></span></a>
+          </h1>
+        </div>
+        <!-- 右侧 -->
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li><a href="首页.html">首页</a></li>
+            <li><a href="JLPT简介.html">简介</a></li>
+            <li><a href="汉语对外传播.html">汉语统计</a></li>
+            <li class="active">
+              <a href="日语对外传播.html">日语统计 <i class="la la-angle-down"></i></a>
+            </li>
+            <li><a href="中日对比.html">日汉对比</a></li>
+          </ul>
+        </nav>
+        <!-- .nav-menu -->
+      </div>
+    </header>
+    <div class="center_box">
+    <div class="container2345">
+        <div style="width: 50%;height: 200px;">
+        <div style="height: 220px;"></div>
+        <div id="main" style="width: 800px; height: 1000px;"class="animated fadeInUp"></div>
+            <script type="text/javascript">
+                // 初始化echarts实例
+                var chartDom = document.getElementById('main');
+                var myChart = echarts.init(document.getElementById("main"));
+                const mapOption= {
+                title: {  //标题样式
+                    text: '2023年参加JLPT日语考试人数全球分布图',
+                    x: "center",
+                    textStyle: {
+                        fontSize: 18,
+                        color: "#16982b"
+                    },
+                },
+                tooltip: {  //这里设置提示框
+                    trigger: 'item',  //数据项图形触发
+                    backgroundColor: "#CDC1C5",  //提示框浮层的背景颜色。
+                    //字符串模板(地图): {a}（系列名称），{b}（区域名称），{c}（合并数值）,{d}（无）
+                    formatter: function(params){
+                        //定义一个res变量来保存最终返回的字符结果,并且先把地区名称放到里面
+                        var res=params.name+'<br />';
+                        //定义一个变量来保存series数据系列
+                        var myseries=mapOption.series;
+                        //循环遍历series数据系列
+                        for(var i=0;i<myseries.length;i++){
+                            //在内部继续循环series[i],从data中判断：当地区名称等于params.name的时候就将当前数据和名称添加到res中供显示
+                            for(var k=0;k<myseries[i].data.length;k++){
+                                //console.log(myseries[i].data[k].name);
+                                //如果data数据中的name和地区名称一样
+                                if(myseries[i].data[k].name==params.name){
+                                    //将series数据系列每一项中的name和数据系列中当前地区的数据添加到res中
+                                    res+=myseries[i].name+':'+myseries[i].data[k].value+'<br />';
+                                }
+                            }
+                        }
+                        //返回res
+                        //console.log(res);
+                        return res;                
+                    },
+                    
+                        
+                },
+                visualMap: {//视觉映射组件
+                    top: 'center',
+                    left:'10%',
+                    min: 0,
+                    max: 40000,
+                    text: ['High', 'Low'],
+                    realtime: true,  //拖拽时，是否实时更新
+                    calculable: true,  //是否显示拖拽用的手柄
+                    inRange: {
+                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                },
+                series: [
+                    {
+                        name: '参加考试总人数',
+                        type: 'map',
+                        universalTransition: false,
+                        mapType: 'world',
+                        roam: true,//是否开启鼠标缩放和平移漫游
+                        itemStyle: {//地图区域的多边形 图形样式
+                            normal: {//是图形在默认状态下的样式
+                                label: {
+                                    show: false,//是否显示标签
+                                    textStyle: {
+                                        color: "black"
+                                    }
+                                }
+                            },
+                            zoom: 1.5,  //地图缩放比例,默认为1
+                            emphasis: {//是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                                label: { show: true,
+                                    textStyle: {
+                                        color: "red",
+                                        fontSize:20,
+                                        
+                                    },
+                                    }
+                            }
+                        },
+                        top: "20%",
+                        left:'10%',//组件距离容器的距离
+                        data:[
+                        {"name":"索马里",value:0},
+                        {"name":"列支敦士登",value:0},
+                        {"name":"摩洛哥",value:110},
+                        {"name":"撒哈拉",value:0},
+                        {"name":"塞尔维亚",value:103},
+                        {"name":"阿富汗",value:0},
+                        {"name":"安哥拉共和国",value:0},
+                        {"name":"阿尔巴尼亚",value:0},
+                        {"name":"奥兰群岛",value:0},
+                        {"name":"安道尔公国",value:0},
+                        {"name":"阿拉伯联合酋长国",value:0},
+                        {"name":"阿根廷",value:679},
+                        {"name":"亚美尼亚",value:89},
+                        {"name":"美属萨摩亚",value:0},
+                        {"name":"法属南方和南极领地",value:0},
+                        {"name":"安提瓜和巴布达",value:0},
+                        {"name":"澳大利亚",value:1212},
+                        {"name":"奥地利",value:302},
+                        {"name":"阿塞拜疆",value:227},
+                        {"name":"布隆迪共和国",value:0},
+                        {"name":"比利时",value:86},
+                        {"name":"贝宁共和国",value:35},
+                        {"name":"布基纳法索",value:0},
+                        {"name":"孟加拉国",value:12369},
+                        {"name":"保加利亚共和国",value:451},
+                        {"name":"巴林王国",value:0},
+                        {"name":"巴哈马",value:0},
+                        {"name":"波黑",value:23},
+                        {"name":"白俄罗斯",value:0},
+                        {"name":"伯利兹",value:0},
+                        {"name":"百慕大群岛",value:0},
+                        {"name":"玻利维亚",value:173},
+                        {"name":"巴西",value:3234},
+                        {"name":"巴巴多斯",value:0},
+                        {"name":"文莱",value:53},
+                        {"name":"不丹",value:21},
+                        {"name":"博茨瓦纳",value:0},
+                        {"name":"中非共和国",value:0},
+                        {"name":"加拿大",value:1570},
+                       {"name":"瑞士",value:402},
+                       {"name":"智利",value:311},
+                       {"name":"中国",value:337506},
+                       {"name":"科特迪瓦",value:36},
+                       {"name":"喀麦隆",value:0},
+                       {"name":"刚果（金）",value:0},
+                       {"name":"刚果（布）",value:25},
+                       {"name":"哥伦比亚",value:154},
+                       {"name":"科摩罗",value:0},
+                       {"name":"佛得角",value:0},
+                       {"name":"哥斯达黎加",value:139},
+                       {"name":"古巴",value:0},
+                       {"name":"库拉索",value:0},
+                       {"name":"开曼群岛",value:0},
+                       {"name":"北塞浦路斯",value:0},
+                       {"name":"塞浦路斯",value:0},
+                       {"name":"捷克共和国",value:435},
+                       {"name":"德国",value:1338},
+                       {"name":"吉布提",value:0},
+                       {"name":"多米尼克",value:0},
+                       {"name":"丹麦",value:181},
+                       {"name":"多米尼加共和国",value:67},
+                       {"name":"阿尔及利亚",value:66},
+                       {"name":"厄瓜多尔",value:55},
+                       {"name":"埃及",value:588},
+                       {"name":"厄立特里亚",value:0},
+                       {"name":"西班牙",value:1596},
+                       {"name":"爱沙尼亚",value:0},
+                       {"name":"埃塞俄比亚",value:0},
+                       {"name":"芬兰",value:180},
+                       {"name":"斐济共和国",value:0},
+                       {"name":"福克兰群岛",value:0},
+                       {"name":"法国",value:2396},
+                       {"name":"法罗群岛",value:0},
+                       {"name":"密克罗尼西亚",value:0},
+                       {"name":"加蓬共和国",value:0},
+                       {"name":"英国",value:1469},
+                       {"name":"格鲁吉亚",value:134},
+                       {"name":"加纳",value:91},
+                       {"name":"几内亚",value:0},
+                       {"name":"冈比亚",value:0},
+                       {"name":"几内亚比绍",value:0},
+                       {"name":"赤道几内亚",value:0},
+                       {"name":"希腊",value:461},
+                       {"name":"格林达纳",value:0},
+                       {"name":"格陵兰岛",value:0},
+                       {"name":"危地马拉",value:0},
+                       {"name":"关岛",value:0},
+                       {"name":"圭亚那",value:0},
+                       {"name":"赫德岛和麦克唐纳群岛",value:0},
+                       {"name":"洪都拉斯",value:0},
+                       {"name":"克罗地亚共和国",value:0},
+                       {"name":"海地",value:0},
+                       {"name":"匈牙利",value:523},
+                       {"name":"印度尼西亚",value:29815},
+                       {"name":"马恩岛",value:0},
+                       {"name":"印度",value:28387},
+                       {"name":"英属印度洋领地",value:0},
+                       {"name":"爱尔兰",value:185},
+                       {"name":"伊朗",value:303},
+                       {"name":"伊拉克",value:0},
+                       {"name":"冰岛",value:0},
+                       {"name":"以色列",value:133},
+                       {"name":"意大利",value:1228},
+                       {"name":"牙买加",value:0},
+                       {"name":"泽西岛",value:0},
+                       {"name":"约旦",value:0},
+                       {"name":"日本",value:433691},
+                       {"name":"锡亚琴冰川",value:0},
+                       {"name":"哈萨克斯坦",value:407},
+                       {"name":"肯尼亚",value:53},
+                       {"name":"吉尔吉斯斯坦",value:368},
+                       {"name":"柬埔寨",value:1950},
+                       {"name":"基里巴斯",value:0},
+                       {"name":"韩国",value:72466},
+                       {"name":"科威特",value:0},
+                       {"name":"老挝",value:275},
+                       {"name":"黎巴嫩",value:0},
+                       {"name":"利比里亚",value:0},
+                       {"name":"利比亚",value:0},
+                       {"name":"圣卢西亚",value:0},
+                       {"name":"斯里兰卡",value:19168},
+                       {"name":"莱索托",value:0},
+                       {"name":"立陶宛",value:0},
+                       {"name":"卢森堡",value:0},
+                       {"name":"拉脱维亚",value:0},
+                       {"name":"摩尔多瓦",value:58},
+                       {"name":"马达加斯加",value:391},
+                       {"name":"墨西哥",value:1948},
+                       {"name":"马其顿共和国",value:0},
+                       {"name":"马里",value:0},
+                       {"name":"马耳他共和国",value:0},
+                       {"name":"缅甸",value:176406},
+                       {"name":"黑山",value:0},
+                       {"name":"蒙古",value:3400},
+                       {"name":"马利亚纳群岛",value:0},
+                       {"name":"莫桑比克",value:0},
+                       {"name":"毛里塔尼亚",value:0},
+                       {"name":"蒙特塞拉特岛",value:0},
+                       {"name":"毛里求斯",value:0},
+                       {"name":"马拉维",value:0},
+                       {"name":"马来西亚",value:4740},
+                       {"name":"纳米比亚",value:0},
+                       {"name":"新喀里多尼亚",value:0},
+                       {"name":"尼日尔",value:0},
+                       {"name":"尼日利亚",value:0},
+                       {"name":"尼加拉瓜共和国",value:0},
+                       {"name":"纽埃",value:0},
+                       {"name":"荷兰",value:243},
+                       {"name":"挪威",value:72},
+                       {"name":"尼泊尔",value:7708},
+                       {"name":"新西兰",value:338},
+                       {"name":"阿曼",value:0},
+                       {"name":"巴基斯坦",value:955},
+                       {"name":"巴拿马",value:0},
+                       {"name":"秘鲁",value:466},
+                       {"name":"菲律宾",value:12630},
+                       {"name":"帕劳",value:0},
+                       {"name":"巴布亚新几内亚",value:48},
+                       {"name":"波兰",value:1112},
+                       {"name":"波多黎各",value:0},
+                       {"name":"朝鲜",value:0},
+                       {"name":"葡萄牙",value:143},
+                       {"name":"巴拉圭",value:500},
+                       {"name":"巴勒斯坦",value:0},
+                       {"name":"法属波利尼西亚",value:0},
+                       {"name":"卡塔尔",value:38},
+                       {"name":"罗马尼亚",value:479},
+                       {"name":"俄罗斯",value:2016},
+                       {"name":"卢旺达",value:0},
+                       {"name":"沙特阿拉伯",value:149},
+                       {"name":"苏丹",value:0},
+                       {"name":"南苏丹",value:0},
+                       {"name":"塞内加尔",value:0},
+                       {"name":"新加坡",value:3069},
+                       {"name":"南乔治亚岛和南桑威奇群岛",value:0},
+                       {"name":"圣赫勒拿岛",value:0},
+                       {"name":"所罗门群岛",value:0},
+                       {"name":"塞拉利昂",value:0},
+                       {"name":"萨瓦尔多",value:0},
+                       {"name":"圣皮埃尔与密克隆",value:0},
+                       {"name":"圣多美和普林西比民主共和国",value:0},
+                       {"name":"苏里南共和国",value:0},
+                       {"name":"斯洛伐克",value:0},
+                       {"name":"斯洛文尼亚",value:36},
+                       {"name":"瑞典",value:0},
+                       {"name":"斯威士兰王国",value:0},
+                       {"name":"塞舌尔共和国",value:0},
+                       {"name":"叙利亚",value:0},
+                       {"name":"特克斯和凯科斯群岛",value:0},
+                       {"name":"乍得",value:0},
+                       {"name":"多哥",value:0},
+                       {"name":"泰国",value:28151},
+                       {"name":"塔吉克斯坦",value:85},
+                       {"name":"土库曼斯坦",value:207},
+                       {"name":"东帝汶",value:0},
+                       {"name":"汤加",value:0},
+                       {"name":"特立尼达和多巴哥",value:7},
+                       {"name":"突尼斯",value:23},
+                       {"name":"土耳其",value:719},
+                       {"name":"坦桑尼亚",value:0},
+                       {"name":"乌干达",value:0},
+                       {"name":"乌克兰",value:71},
+                       {"name":"乌拉圭",value:98},
+                       {"name":"美国",value:5533},
+                       {"name":"乌兹别克斯坦",value:1136},
+                       {"name":"圣文森特和格林纳丁斯",value:0},
+                       {"name":"委内瑞拉",value:177},
+                       {"name":"美属维尔京群岛",value:0},
+                       {"name":"越南",value:54807},
+                       {"name":"瓦努阿图共和国",value:0},
+                       {"name":"萨摩亚",value:0},
+                       {"name":"也门",value:0},
+                       {"name":"南非",value:40},
+                       {"name":"赞比亚",value:0},
+                       {"name":"津巴布韦",value:0},
+                       {"name":"（印控）克什米尔地区",value:0},
+                       {"name":"（巴控）克什米尔地区",value:0},
+                        ]
+                    }
+                  ]
+                };
+        myChart.setOption(mapOption);
+      
+        mapOption && myChart.setOption(mapOption);
+            </script>
+        </div>
+        <div class="right-containers">
+            <div id="main8" style="width: 600px;height: 100px;"></div>
+            <div id="main1" style="width: 600px;height: 400px;"class="animated fadeInUp">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('main1'));
+                    option = {
+                      title: {
+                              text: '2023年JLPT考生人数洲际分布图',
+                              left: 'center',
+                              top: '0%',
+                              color: "#16982b", 
+                              textStyle: {
+                              fontSize: 16,
+                              color: "#16982b", 
+                                  }
+                              },
+                tooltip: {
+                  trigger: 'item'
+                },
+                legend: {
+                  top: '15%',
+                  left: 'center'
+                },
+                series: [
+                  {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['65%', '95%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                      borderRadius: 10,
+                      borderColor: '#000080',
+                      borderWidth: 2
+                    },
+                    label: {
+                      show: false,
+                      position: 'center'
+                    },
+                    emphasis: {
+                      label: {
+                        show: true,
+                        fontSize: 40,
+                        fontWeight: 'bold',
+                      }
+                    },
+                    labelLine: {
+                      show: false
+                    },
+                    top: '35%',
+                    data: [
+                    { value: 406855, name: '东亚'},
+                    { value: 152386, name: '东南亚'},
+                    { value: 32627, name: '南亚'},
+                    { value: 6959, name: '欧洲' },
+                    { value: 1933, name: '南美洲' },
+                    { value: 804, name: '北美洲' },
+                    { value: 296, name: '非洲' },
+                    { value: 280, name: '大洋洲' }
+                    ]
+                  }
+                ]
+              };
+              myChart.setOption(option);
+                      </script>
+            </div>
+            <div style="height: 25px;"></div>
+            <div id="main8" style="width: 600px;height: 100px;"></div>
+            <div id="main2" style="height: 400px;display: flex;width: 600px;"class="animated fadeInUp">
+                
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('main2'));
+                    option = {
+          title: {
+            left: 'center',
+            textStyle: {
+                              fontSize: 16,
+                              color: "#16982b", 
+                                  },
+            text: 'JLPT等级人数堆叠面积图',
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            top: '15%',
+            data: ['N5', 'N4', 'N3', 'N2', 'N1']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: ['2017', '2018', '2019', '2020', '2021', '2022', '2023']
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: 'N5',
+              type: 'line',
+              stack: 'Total',
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+              data: [87764, 105033, 117995, 24514, 39176, 87895, 115411]
+            },
+            {
+              name: 'N4',
+              type: 'line',
+              stack: 'Total',
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+              data: [119404, 135695, 183234, 52993, 89585, 163083, 297744]
+            },
+            {
+              name: 'N3',
+              type: 'line',
+              stack: 'Total',
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+              data: [204808, 244077, 280144, 98208, 159466, 165947, 300937]
+            },
+            {
+              name: 'N2',
+              type: 'line',
+              stack: 'Total',
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+              data: [271768, 304238, 342474, 114076, 211969, 200212, 309382]
+            },
+            {
+              name: 'N1',
+              type: 'line',
+              stack: 'Total',
+              label: {
+                show: true,
+                position: 'top'
+              },
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+              data: [203636, 220031, 244688, 80237, 184712, 170817, 1320]
+            }
+          ]
+        };
+        myChart.setOption(option);
+                </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <!-- Footer -->
+        <div style="height : 150px" ></div>
+        <footer id="footer">
+      
+          <div class="container">
+    
+            <div class="credits"></div>
+          </div>
+        </footer>
+    
+        <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a> 
+   
+    <!-- js渲染文件 CDN -->
+    <script src="JS/jquery.min.js"></script>
+    <script src="JS/jquery.easing.min.js"></script>
+    <script src="JS/validate.js"></script>
+    <script src="JS/jquery.sticky.min.js"></script>
+    <script src="JS/aos.js"></script>
+    <!-- js渲染文件 本地文件 -->
+    <script src="JS/jquery.waypoints.min.js"></script>
+    <script src="JS/counterup.min.js"></script>
+    <script src="JS/isotope.pkgd.min.js"></script>
+    <script src="JS/bootstrap.bundle.min.js"></script>
+
+    <!-- 主js文件 -->
+    <script src="JS/main.js"></script>        
+</body>
+</html>
+

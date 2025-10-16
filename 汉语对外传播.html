@@ -1,0 +1,426 @@
+<html lang="en">
+<head>
+    <script src="JS/echarts.min.js"></script>
+    <script src="JS/continent_world.js"></script>
+
+
+
+    <!-- 谷歌字体 -->
+    <link
+      href="CSS/googlefont.css"
+      rel="stylesheet"
+    />
+
+    <!-- 渲染css文件 CDN -->
+    <link
+    href="CSS/venobox.min.css"
+      rel="stylesheet"
+    />
+    <link
+    href="CSS/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/animate.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/icofont.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 主渲染文件 -->
+    <link href="CSS/style.css" rel="stylesheet" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉语对外传播</title>
+    <style>
+        .container2345 {
+            display: flex;
+            justify-content: space-between; /* 使左右两边的容器均匀分布 */
+            width: 100%;
+            height: 1000px;
+        }
+        .right-containers {
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+        }
+        .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10%;
+            color: black;
+            font-size: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('pic/背景.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        .center_box {
+            background-image: url('pic/背景1.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航栏  -->
+    <header id="header">
+      <div class="container">
+        <!-- logo左侧 -->
+        <div class="logo float-left">
+          <h1 class="text-light">
+            <a href="首页.html"><span>汉语考试统计<br></span></a>
+          </h1>
+        </div>
+        <!-- 右侧 -->
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li>
+              <a href="首页.html">首页 <i class="la la-angle-down"></i></a>
+            </li>
+            <li><a href="HSK简介.html">简介</a></li>
+            <li class="active"><a href="汉语对外传播.html">汉语统计</a></li>
+            <li><a href="日语对外传播.html">日语统计</a></li>
+            <li><a href="中日对比.html">日汉对比</a></li>
+          </ul>
+        </nav>
+        <!-- .nav-menu -->
+      </div>
+    </header>
+
+
+    <div class="center_box">
+    <div class="container2345">
+        <div style="width: auto;height: 800px;">
+        <div style="height: 210px;"></div>
+        <div id="main" style="width: 800px; height: 1000px; "class="animated fadeInUp"></div>
+            <script type="text/javascript">
+                // 初始化echarts实例
+                var chartDom = document.getElementById('main');
+                var myChart = echarts.init(document.getElementById("main"));
+                const mapOption= {
+                    title: {  //标题样式
+                        text: '全球孔子学院大洲分布图',
+                        x: "center",
+                        textStyle: {
+                            fontSize: 18,
+                            color: "#16982b"
+                        },
+                    },
+                    tooltip: {  //这里设置提示框
+                trigger: 'item',  //数据项图形触发
+                backgroundColor: "#CDC1C5",  //提示框浮层的背景颜色。
+                //字符串模板(地图): {a}（系列名称），{b}（区域名称），{c}（合并数值）,{d}（无）
+                formatter: function(params){
+                    //定义一个res变量来保存最终返回的字符结果,并且先把地区名称放到里面
+                    var res=params.name+'<br />';
+                    //定义一个变量来保存series数据系列
+                    var myseries=mapOption.series;
+                    //循环遍历series数据系列
+                    for(var i=0;i<myseries.length;i++){
+                        //在内部继续循环series[i],从data中判断：当地区名称等于params.name的时候就将当前数据和名称添加到res中供显示
+                        for(var k=0;k<myseries[i].data.length;k++){
+                            //console.log(myseries[i].data[k].name);
+                            //如果data数据中的name和地区名称一样
+                            if(myseries[i].data[k].name==params.name){
+                                //将series数据系列每一项中的name和数据系列中当前地区的数据添加到res中
+                                res+=myseries[i].name+':'+myseries[i].data[k].value+'<br />';
+                            }
+                        }
+                    }
+                    //返回res
+                    //console.log(res);
+                    return res;                
+                },
+                
+                    
+            },
+                    visualMap: {//视觉映射组件
+                        top: 'center',
+                        left: 'left',
+                        min: 0,
+                        max: 800,
+                        text: ['High', 'Low'],
+                        realtime: true,  //拖拽时，是否实时更新
+                        calculable: true,  //是否显示拖拽用的手柄
+                        inRange: {
+                            color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                        }
+                    },
+                    series: [
+                        {
+                            
+                            name: '孔子学院数量',
+                            type: 'map',
+                            
+                            universalTransition: false,
+                            mapType: 'world',
+                            roam: true,//是否开启鼠标缩放和平移漫游
+                            itemStyle: {//地图区域的多边形 图形样式
+                                normal: {//是图形在默认状态下的样式
+                                    label: {
+                                        show: false,//是否显示标签
+                                        textStyle: {
+                                            color: "black"
+                                        }
+                                    }
+                                },
+                                zoom: 1.5,  //地图缩放比例,默认为1
+                                emphasis: {//是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                                    label: { show: true,
+                                        textStyle: {
+                                            color: "#4F4F4F",
+                                            fontSize:20,  
+                                        },
+                                        }
+                                }
+                            },
+                            top: "10%",//组件距离容器的距离
+                            data:[
+                                { name: '北美洲', value:113},
+                                { name: '拉丁美洲', value: 31 },
+                                { name: '非洲', value: 62 },
+                                { name: '欧洲', value: 187 },
+                                { name: '亚洲', value: 137 },
+                                { name: '大洋洲', value: 20 },
+                            ]
+                        },
+                        {
+                            name: '孔子课堂数量',
+                            type: 'map',
+                        
+                            universalTransition: false,
+                            mapType: 'world',
+                            roam: false,//是否开启鼠标缩放和平移漫游
+                            itemStyle: {//地图区域的多边形 图形样式
+                                normal: {//是图形在默认状态下的样式
+                                    label: {
+                                        show: false,//是否显示标签
+                                        textStyle: {
+                                            color: "black"
+                                        }
+                                    }
+                                },
+                                zoom: 1.5,  //地图缩放比例,默认为1
+                                emphasis: {//是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                                    label: { show: true }
+                                }
+                            },
+                            top: "3%",//组件距离容器的距离
+                            data:[
+                                { name: '北美洲', value:541},
+                                { name: '拉丁美洲', value: 19 },
+                                { name: '非洲', value: 48 },
+                                { name: '欧洲', value: 348 },
+                                { name: '亚洲', value: 115 },
+                                { name: '大洋洲', value: 101 },
+                            ]}
+                      ]
+                    };
+            myChart.setOption(mapOption);
+          mapOption && myChart.setOption(mapOption);
+            </script>
+        </div>
+        
+        <div class="right-containers">
+            <div id="main8" style="width: 600px;height: 75px;"></div>
+            <div id="main1" style="width: 600px;height: 300px;"class="animated fadeInUp">
+                <script>
+                    var myChart = echarts.init(document.getElementById('main1'));
+                        var option = {
+                        title: {
+                            text: '全球孔子学院数量变化图',
+                            left: 'center',
+                            top: '5%',
+                            textStyle: {
+                                fontSize: 16,
+                                color: "#16982b"
+                            }
+                        },
+                        tooltip: {},
+                        grid: {
+                            left: '3%',
+                            right: '20%', // 留出足够的空间给右侧的图例
+                            bottom: '3%',
+                            containLabel: true,
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['2009','2010','2011','2012','2012','2013','2014','2015','2016', '2017', '2018', '2019', '2020', '2022','2023'],
+                            name: '年份',
+                            nameLocation: 'end', // 把横轴名称放在中间位置
+                            nameGap: 30, // 调整名称与轴线的距离
+                            nameTextStyle: {
+                                fontSize: 14,
+                                align: 'right', // 文字右对齐
+                                color: "#Ff1493"
+                            },
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '数量',
+                            nameLocation: 'end', // 将纵轴名称放到最上方
+                            nameRotate: 0, // 垂直旋转文字
+                            nameGap: 20, // 调整名称与轴线的距离
+                            nameTextStyle: {
+                                fontSize: 14,
+                                align: 'left', // 文字左对齐（默认垂直方向即为上方）
+                                color: "#Ff1493"
+                            },
+                        },
+                        series: [
+                        {
+                            data: [282, 318, 364, 400, 449, 475, 500,513,525,548,550,541,489,492,498],
+                            type: 'line',
+                            smooth: true,
+                            lineStyle: { width: 2, color: 'blue' },
+                            name: '',
+                            animationDuration: 2000, // 设置动画持续时间为2秒
+                            animationEasing: 'linear' // 设置动画缓动方式为线性
+                        },
+                        
+                    ],
+                    top: "10%",
+                };
+                    // 使用刚指定的配置项和数据显示图表
+                    myChart.setOption(option);
+                </script>
+            </div>
+            <div style="height: 100px;"></div>
+            <div style="height: 400px;display: flex;width: 600px;">
+              
+            <div id="main2" style="height: 400px;width: 280px;display: flex;"class="animated fadeInUp">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('main2'));
+                    option = {
+                        color:['#FFC0CB'],
+              title: [
+                {
+                  text: '全球孔子学院人数(单位:百万人)',
+                  left: 'center',
+                  textStyle: {
+                                fontSize: 16,
+                                color: "#16982b", 
+                            }
+                }
+              ],
+              polar: {
+                radius: [30, '80%']
+              },
+              radiusAxis: {
+                max: 2
+              },
+              angleAxis: {
+                type: 'category',
+                data: ['2020', '2021', '2022'],
+                startAngle: 75
+              },
+              tooltip: {},
+              series: {
+                type: 'bar',
+                data: [1.2, 1.05, 1.50],
+                coordinateSystem: 'polar',
+                label: {
+                  show: true,
+                  position: 'middle',
+                  formatter: '{b}: {c}'
+                }
+              },
+              animation: false
+            };
+            myChart.setOption(option);
+                    </script>
+            </div>
+            <div id="main3" style="width: 280px;height: 400px;display: flex;"class="animated fadeInUp">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('main3'));
+                    option = {
+              title: [
+                {
+                  text: '全球HSK考试人数(单位:万人)',
+                  left: 'center',
+                  textStyle: {
+                                fontSize: 16,
+                                color: "#16982b", 
+                            }
+                }
+              ],
+              polar: {
+                radius: [30, '80%']
+              },
+              angleAxis: {
+                max: 100,
+                startAngle: 75
+              },
+              radiusAxis: {
+                type: 'category',
+                data: ['18', '20', '22', '23']
+              },
+              tooltip: {},
+              series: {
+                type: 'bar',
+                data: [64.6, 30, 50, 66],
+                coordinateSystem: 'polar',
+                label: {
+                  show: true,
+                  position: 'middle',
+                  formatter: '{b}: {c}'
+                }
+              }
+            };
+            myChart.setOption(option);
+                    </script>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+    </div>
+    <div style="height : 150px" ></div>
+        <!-- Footer -->
+        <footer id="footer">
+      
+          <div class="container">
+    
+            <div class="credits"></div>
+          </div>
+        </footer>
+    
+        <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>               
+    <!-- js渲染文件 CDN -->
+    <script src="JS/jquery.min.js"></script>
+    <script src="JS/jquery.easing.min.js"></script>
+    <script src="JS/validate.js"></script>
+    <script src="JS/jquery.sticky.min.js"></script>
+    <script src="JS/aos.js"></script>
+    <!-- js渲染文件 本地文件 -->
+    <script src="JS/jquery.waypoints.min.js"></script>
+    <script src="JS/counterup.min.js"></script>
+    <script src="JS/isotope.pkgd.min.js"></script>
+    <script src="JS/bootstrap.bundle.min.js"></script>
+
+    <!-- 主js文件 -->
+    <script src="JS/main.js"></script>
+</body>
+</html>
+

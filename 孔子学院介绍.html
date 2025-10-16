@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 谷歌字体 -->
+    <link
+      href="CSS/googlefont.css"
+      rel="stylesheet"
+    />
+
+    <!-- 渲染css文件 CDN -->
+    <link
+    href="CSS/venobox.min.css"
+      rel="stylesheet"
+    />
+    <link
+    href="CSS/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="CSS/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/animate.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="CSS/icofont.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 主渲染文件 -->
+    <link href="CSS/style.css" rel="stylesheet" />
+<style>    
+    .container1 {
+      display: flex;
+      flex-direction: row-reverse; /* 使图片在右侧，文本在左侧，替代order属性 */
+      height: 550px;
+    }
+    
+    .text {
+      flex: 1;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      margin-right: 20px; /* 添加右外边距，与图片间隔 */
+    }
+    
+    .image {
+      flex: 1;
+      text-align: center;
+    }
+    
+    img {
+      max-width: 100%;
+      height: 550px;
+    }
+    
+    h2 {
+      font-size: 24px; /* 调整标题字号 */
+      margin-bottom: 10px; /* 添加标题下边距 */
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+    
+    p {
+      font-size: 15px; /* 调整段落字号 */
+      margin-bottom: 15px; /* 添加段落间距 */
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+    </style>
+</head>
+<body background="pic/背景2.gif">
+    <!-- 头部导航栏  -->
+    <header id="header">
+      <div class="container">
+        <!-- logo左侧 -->
+        <div class="logo float-left">
+          <h1 class="text-light">
+            <a href="首页.html"><span>概念简介<br></span></a>
+          </h1>
+        </div>
+        <!-- 右侧 -->
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li >
+              <a href="首页.html">首页 <i class="la la-angle-down"></i></a>
+            </li>
+            <li class="active"><a href="HSK简介.html">简介</a></li>
+            <li><a href="汉语对外传播.html">汉语统计</a></li>
+            <li><a href="日语对外传播.html">日语统计</a></li>
+            <li><a href="中日对比.html">日汉对比</a></li>
+          </ul>
+        </nav>
+        <!-- .nav-menu -->
+      </div>
+    </header>
+      <div style="height: 50px;"></div>
+      <div class="container1">
+        <div class="image">
+          <img src="pic/孔子学院1.jpeg" alt="图片">
+        </div>
+        <div class="text">
+          <h2>孔子学院</h2>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;孔子学院（Confucius Institute） 是一个全球性教育机构网络，致力于推广汉语教学和传播中国文化。
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>成立背景与目的：</b>
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;孔子学院由中华人民共和国教育部下属的孔子学院总部（Hanban）与世界各地的高校和其他教育机构合作建立。其主要目的是为了响应全球范围内日益增长的汉语学习需求和对中国文化的兴趣，促进国际间的语言与文化交流。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>组织性质与运营：</b>
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非营利性：孔子学院作为非营利的社会公益机构，其运作资金主要来源于中国政府的支持与其他合作伙伴的共同投入。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国际合作：通常设立在国外的大学或教育机构内，采取中外合作模式，共同管理与运营。
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>功能与服务：</b>
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;汉语教学：提供从初级到高级的汉语课程，满足不同水平学习者的需求。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文化活动：举办各类中国文化体验活动，如书法、武术、茶艺、传统节日庆祝等，增进当地民众对中国文化的了解。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;教师培训与派遣：培训本土汉语教师，同时派遣中国教师赴外教学。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学术研究与交流：促进汉语教学方法的研究及中西方学术文化交流。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;资源支持：提供教材、教学软件、图书及多媒体资源等。
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>影响：</b>
+           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;孔子学院极大地推动了汉语的国际化进程，加强了中外人文交流，促进了多元文化的理解和尊重。
+            </p>
+            <br>
+            <br>
+            <br><a href="JLPT简介.html"><p><h4>上一个：JLPT简介</h></a>
+        </div>
+      </div>
+      <!-- js渲染文件 CDN -->
+      <script src="JS/jquery.min.js"></script>
+      <script src="JS/jquery.easing.min.js"></script>
+      <script src="JS/validate.js"></script>
+      <script src="JS/jquery.sticky.min.js"></script>
+      <script src="JS/aos.js"></script>
+      <!-- js渲染文件 本地文件 -->
+      <script src="JS/jquery.waypoints.min.js"></script>
+      <script src="JS/counterup.min.js"></script>
+      <script src="JS/isotope.pkgd.min.js"></script>
+      <script src="JS/bootstrap.bundle.min.js"></script>
+  
+      <!-- 主js文件 -->
+      <script src="JS/main.js"></script>      
+</body>
+</html>
